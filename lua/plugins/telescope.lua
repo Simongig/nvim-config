@@ -9,29 +9,9 @@
 --    Installation schon vorbei, wenn er angelegt wird.
 -- ---------------------------------------------------------------------------
 
-vim.api.nvim_create_autocmd('PackChanged', {
-  group = vim.api.nvim_create_augroup('user-telescope-build', { clear = true }),
-  callback = function(ev)
-    -- ev.data enthält: spec (Name, URL), kind ("install"/"update"/"delete"), path
-    local name, kind = ev.data.spec.name, ev.data.kind
-    if name ~= 'telescope-fzf-native.nvim' or (kind ~= 'install' and kind ~= 'update') then
-      return -- betrifft uns nicht
-    end
-    if vim.fn.executable('make') == 0 then
-      vim.notify('fzf-native: "make" fehlt (sudo apt install build-essential)', vim.log.levels.WARN)
-      return
-    end
-    -- `make` im Plugin-Ordner ausführen; :wait() = warten, bis es fertig ist
-    local result = vim.system({ 'make' }, { cwd = ev.data.path }):wait()
-    if result.code ~= 0 then
-      vim.notify('fzf-native: make fehlgeschlagen:\n' .. result.stderr, vim.log.levels.ERROR)
-    end
-  end,
-})
 
 vim.pack.add({
   "https://github.com/nvim-lua/plenary.nvim",
-  "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
   { src = "https://github.com/nvim-telescope/telescope.nvim", version = vim.version.range('*')}, 
 })
 
@@ -40,6 +20,15 @@ local telescope = require("telescope")
 
 telescope.setup({
   defaults = {
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case'
+    },
     -- Default configuration for telescope goes here:
     -- config_key = value,
     mappings = {
@@ -69,8 +58,6 @@ telescope.setup({
     -- please take a look at the readme of the extension you want to configure
   }
 })
-
-pcall(telescope.load_extension('fzf'))
 
 -- ---------------------------------------------------------------------------
 -- 4) Tastenkürzel – alle unter <leader>s ("suchen")
