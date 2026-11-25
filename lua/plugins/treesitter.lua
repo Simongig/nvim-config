@@ -22,9 +22,9 @@ vim.pack.add({
 
 local nvim_treesitter = require("nvim-treesitter")
 
-nvim_treesitter.setup {}
+nvim_treesitter.setup({})
 
-nvim_treesitter.install{"python", "bash", "dockerfile", "lua", "vim", "vimdoc", "markdown", "markdown_inline", "json", "yaml", "toml"}
+nvim_treesitter.install({"python", "javascript", "bash", "dockerfile", "lua", "vim", "vimdoc", "markdown", "markdown_inline", "json", "yaml", "toml"})
 
 -- start treesitter
 vim.api.nvim_create_autocmd('FileType', {
