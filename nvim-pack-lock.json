@@ -16,6 +16,10 @@
       "rev": "ef8864bb42bf244f0295d1c5a403b27e3d139695",
       "src": "https://github.com/morhetz/gruvbox"
     },
+    "markview.nvim": {
+      "rev": "a6dbc5a4a4828b474c81fbcec11546cbd9000e3b",
+      "src": "https://github.com/OXY2DEV/markview.nvim"
+    },
     "nvim-lspconfig": {
       "rev": "c59fc922f718fa055f69f5f3bc888f23211571eb",
       "src": "https://github.com/neovim/nvim-lspconfig"
